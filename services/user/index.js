@@ -18,4 +18,13 @@ const getUserByEmail = async (email) => {
   }
 };
 
-module.exports = { getAllUser, getUserByEmail };
+const getUserById = async (id) => {
+  try {
+    const user = await User.findOne({ where: { id: id } });
+    return user;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAllUser, getUserByEmail,getUserById };
