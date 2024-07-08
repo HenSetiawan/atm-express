@@ -12,7 +12,7 @@ const auth = (req, res, next) => {
     if (err) {
       return res.status(403).json({ message: "token is not valid", status:"failed" });
     }
-    req.user = user;
+    req.data = user;
     next();
   });
 };
