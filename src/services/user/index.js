@@ -1,5 +1,34 @@
 const { User } = require("../../models");
 
+const createuser = async (userData) => {
+  try {
+    const newUser = await User.create(userData);
+    return newUser.toJSON();
+  } catch (error) {
+    return error;
+  }
+};
+
+const updateUser = async (id, userData) => {
+  try {
+    const oldUser = await getUserById(id);
+    const newUser = await oldUser.update(userData);
+    return newUser.toJSON();
+  } catch (error) {
+    return error;
+  }
+};
+
+const deleteUser = async (id) => {
+  try {
+    const user = await getUserById(id);
+    const userDeleted = await user.destroy();
+    return userDeleted;
+  } catch (error) {
+    return error;
+  }
+};
+
 const getAllUser = async () => {
   try {
     const users = await User.findAll();
@@ -27,4 +56,11 @@ const getUserById = async (id) => {
   }
 };
 
-module.exports = { getAllUser, getUserByEmail,getUserById };
+module.exports = {
+  getAllUser,
+  getUserByEmail,
+  getUserById,
+  createuser,
+  updateUser,
+  deleteUser
+};

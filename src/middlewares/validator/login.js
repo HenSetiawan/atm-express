@@ -11,4 +11,4 @@ const loginValidator = [
     .withMessage("Password is required"),
 ];
 
-module.exports = loginValidator;
+module.exports = {loginValidator};

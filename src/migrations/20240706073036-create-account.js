@@ -20,9 +20,6 @@ module.exports = {
       balance: {
         type: Sequelize.INTEGER,
       },
-      type: {
-        type: Sequelize.ENUM('deposit','transfer'),
-      },
       accountNumber: {
         type: Sequelize.INTEGER,
       },

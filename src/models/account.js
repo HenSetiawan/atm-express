@@ -30,10 +30,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      type: {
-        type: DataTypes.ENUM("deposit", "transfer"),
-        allowNull: false,
-      },
       accountNumber: {
         type: DataTypes.INTEGER,
         allowNull: false,
