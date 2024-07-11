@@ -9,4 +9,23 @@ const createAccount = async (accountData) => {
   }
 };
 
-module.exports = { createAccount };
+const getAccountByUserId = async (id) => {
+  try {
+    const account = await Account.findOne({ where: { userId: id } });
+    return account;
+  } catch (error) {
+    return error;
+  }
+};
+
+const deleteAccount = async (id) => {
+  try {
+    const account = await getAccountByUserId(id);
+    const accountDeleted = await account.destroy();
+    return accountDeleted;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { createAccount, deleteAccount };

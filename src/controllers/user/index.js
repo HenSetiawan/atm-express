@@ -1,5 +1,5 @@
-const { getUserById, createuser } = require("../../services/user");
-const { createAccount } = require("../../services/account");
+const { getUserById, createuser, deleteUser } = require("../../services/user");
+const { createAccount, deleteAccount } = require("../../services/account");
 const { hashString } = require("../../utils/hash");
 const { generateRandom12DigitNumber } = require("../../utils/randomNumber");
 const { validationResult } = require("express-validator");
@@ -10,7 +10,30 @@ const getCurrentUser = async (req, res) => {
     const user = await getUserById(userId);
     return res.json({ status: "success", data: user });
   } catch (error) {
-    res.status(400).json({ status: "failed", error: error });
+    return res.status(400).json({ status: "failed", error: error });
+  }
+};
+
+const deleteUserById = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const user = await getUserById(userId);
+    if (user == null) {
+      return res
+        .status(404)
+        .json({ status: "failed", message: "user not found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ status: "failed", error: error });
+  }
+  try {
+    await Promise.all([deleteAccount(userId), deleteUser(userId)]);
+    return res.json({
+      status: "success",
+      message: `data user and account with user id ${userId} deleted`,
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "failed", error: error });
   }
 };
 
@@ -33,7 +56,7 @@ const registerUser = async (req, res) => {
   try {
     newUser = await createuser(userData);
   } catch (error) {
-    res.status(500).json({ message: "something wrong", error: error });
+    return res.status(500).json({ message: "something wrong", error: error });
   }
 
   const accountData = {
@@ -44,10 +67,10 @@ const registerUser = async (req, res) => {
 
   try {
     newAccount = await createAccount(accountData);
-    res.json({ user: newUser, account: newAccount, message: "success" });
+    return res.json({ user: newUser, account: newAccount, message: "success" });
   } catch (error) {
-    res.status(500).json({ message: "something wrong", error: error });
+    return res.status(500).json({ message: "something wrong", error: error });
   }
 };
 
-module.exports = { getCurrentUser, registerUser };
+module.exports = { getCurrentUser, registerUser, deleteUserById };
