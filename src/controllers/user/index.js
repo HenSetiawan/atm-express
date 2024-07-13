@@ -1,5 +1,14 @@
-const { getUserById, createuser, deleteUser } = require("../../services/user");
-const { createAccount, deleteAccount, getAccountByUserId } = require("../../services/account");
+const {
+  getUserById,
+  createuser,
+  deleteUser,
+  updateUser,
+} = require("../../services/user");
+const {
+  createAccount,
+  deleteAccount,
+  getAccountByUserId,
+} = require("../../services/account");
 const { hashString } = require("../../utils/hash");
 const { generateRandom12DigitNumber } = require("../../utils/randomNumber");
 const { validationResult } = require("express-validator");
@@ -9,9 +18,32 @@ const getCurrentUser = async (req, res) => {
   try {
     const user = await getUserById(userId);
     const account = await getAccountByUserId(userId);
-    return res.json({ status: "success", data: user,account:account });
+    return res.json({ status: "success", data: user, account: account });
   } catch (error) {
     return res.status(400).json({ status: "failed", error: error });
+  }
+};
+
+const updateUserById = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const userId = req.params.id;
+  const userData = {
+    fullName: req.body.fullName,
+    nik: req.body.nik,
+    address: req.body.address,
+    email: req.body.email,
+    username: req.body.email,
+    password: await hashString(req.body.password),
+  };
+
+  try {
+    const updatedUser = updateUser(userId, userData);
+    return res.json({ status: "success", data: updatedUser });
+  } catch (error) {
+    return res.status(500).json({ status: "failed", error: error });
   }
 };
 
@@ -74,4 +106,4 @@ const registerUser = async (req, res) => {
   }
 };
 
-module.exports = { getCurrentUser, registerUser, deleteUserById };
+module.exports = { getCurrentUser, registerUser, deleteUserById, updateUserById };

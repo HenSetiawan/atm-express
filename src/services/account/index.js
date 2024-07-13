@@ -28,4 +28,4 @@ const deleteAccount = async (id) => {
   }
 };
 
-module.exports = { createAccount, deleteAccount, getAccountByUserId };
+module.exports = { createAccount, deleteAccount, getAccountByUserId};
