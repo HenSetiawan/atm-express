@@ -1,5 +1,5 @@
 const { getUserById, createuser, deleteUser } = require("../../services/user");
-const { createAccount, deleteAccount } = require("../../services/account");
+const { createAccount, deleteAccount, getAccountByUserId } = require("../../services/account");
 const { hashString } = require("../../utils/hash");
 const { generateRandom12DigitNumber } = require("../../utils/randomNumber");
 const { validationResult } = require("express-validator");
@@ -8,7 +8,8 @@ const getCurrentUser = async (req, res) => {
   const userId = req.data.user.id;
   try {
     const user = await getUserById(userId);
-    return res.json({ status: "success", data: user });
+    const account = await getAccountByUserId(userId);
+    return res.json({ status: "success", data: user,account:account });
   } catch (error) {
     return res.status(400).json({ status: "failed", error: error });
   }
