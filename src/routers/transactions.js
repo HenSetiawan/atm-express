@@ -9,4 +9,10 @@ transactionRouter.get(
   transactionController.getAllUserTransaction
 );
 
+transactionRouter.post(
+    "/deposito",
+    auth,
+    transactionController.transactionDepositoByUser
+  );
+
 module.exports = transactionRouter;

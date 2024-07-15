@@ -29,7 +29,7 @@ module.exports = {
         allowNull:false
       },
       type: {
-        type: Sequelize.ENUM('deposit','transfer'),
+        type: Sequelize.ENUM('deposito','transfer'),
         allowNull:false
       },
       createdAt: {
