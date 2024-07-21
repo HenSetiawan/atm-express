@@ -18,6 +18,15 @@ const getAccountByUserId = async (id) => {
   }
 };
 
+const getAccountByAccountId = async (id) => {
+  try {
+    const account = await Account.findOne({ where: { id: id } });
+    return account;
+  } catch (error) {
+    return error;
+  }
+};
+
 const deleteAccount = async (id) => {
   try {
     const account = await getAccountByUserId(id);
@@ -28,4 +37,4 @@ const deleteAccount = async (id) => {
   }
 };
 
-module.exports = { createAccount, deleteAccount, getAccountByUserId };
+module.exports = { createAccount, deleteAccount, getAccountByUserId, getAccountByAccountId };
