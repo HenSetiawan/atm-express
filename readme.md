@@ -6,6 +6,8 @@ Berikut adalah ERD dari DB yang digunakan.
 - One to One (user to account): satu user memiliki satu account
 - One to Many (account to transactions): satu accout dapat memiliki banyak transaksi
 
+![image](https://raw.githubusercontent.com/HenSetiawan/atm-express/be86648c24b145bdbf2b5d4a366f1341c69bae78/docs/erd.png)
+
 ## Use Case
  - Auth
     - [ ]  User dapat melakukan register akun
@@ -22,3 +24,6 @@ Berikut adalah ERD dari DB yang digunakan.
  
 ## Dokumentasi API
 Swagger :
+
+![image](https://raw.githubusercontent.com/HenSetiawan/atm-express/main/docs/swagger1.png)
+![image](https://raw.githubusercontent.com/HenSetiawan/atm-express/main/docs/swagger2.png)
